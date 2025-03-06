@@ -1,14 +1,14 @@
 import sys
 import os
+import importlib
 
 # 1. SQLITE3 PATCH (MUST BE FIRST)
-# 1. SQLITE3 PATCH (MUST BE FIRST)
 try:
-    import pysqlite3
+    # Use importlib to dynamically import pysqlite3
+    pysqlite3 = importlib.import_module('pysqlite3')
     sys.modules['sqlite3'] = pysqlite3
 except ImportError:
     raise RuntimeError("Install pysqlite3-binary: pip install pysqlite3-binary")
-
 
 # 2. IMPORTS (AFTER SQLITE PATCH)
 import asyncio
