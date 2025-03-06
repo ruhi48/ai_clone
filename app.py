@@ -1,6 +1,5 @@
 import sqlite3
 import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import chromadb
 import streamlit as st
 import sys
