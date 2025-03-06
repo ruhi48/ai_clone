@@ -1,22 +1,18 @@
+_import_('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+import chromadb
+import streamlit as st
 import sys
 import os
-
-# 1. SQLITE3 PATCH (MUST BE FIRST)
-try:
-    import pysqlite3
-    sys.modules['sqlite3'] = pysqlite3
-except ImportError:
-    raise RuntimeError("Install pysqlite3-binary: pip install pysqlite3-binary")
-
-# 2. IMPORTS (AFTER SQLITE PATCH)
-import asyncio
-import nest_asyncio
-import streamlit as st
+import numpy as np
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.vectorstores import Chroma
 from langchain_groq import ChatGroq
+from langchain.schema import HumanMessage, SystemMessage
+from langchain.memory import ConversationBufferMemory
+from sentence_transformers import SentenceTransformer, util
 
 # Initialize models and database
 embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
