@@ -1,15 +1,17 @@
-import sys
 import streamlit as st
+import pysqlite3
+import sys
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 import chromadb
+import os
+import numpy as np
+from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
 from langchain.schema import HumanMessage, SystemMessage
 from langchain.memory import ConversationBufferMemory
 from sentence_transformers import SentenceTransformer, util
-from PyPDF2 import PdfReader
-import os
-import numpy as np
 
 # Initialize models and database
 embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
